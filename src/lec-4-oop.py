@@ -726,3 +726,44 @@ class Student(Person):
 # stu = Student()
 
 # print(stu)
+
+
+# ================================================ Mixins
+# Mixins classes
+    
+
+class WalkMixin:
+
+    def move(self):
+        print("Walking......")
+
+class FlyMixin:
+
+    def move(self):
+        print("Flying......")
+
+
+class Animal:
+
+    pass
+
+
+class Horse(Animal, WalkMixin):
+
+    def __init__(self):
+
+        self.move()
+
+class Eagle(Animal, FlyMixin):
+
+    def __init__(self):
+        self.move()
+
+
+h = Horse()
+
+print(Horse.__mro__)
+
+e = Eagle()
+
+print(Eagle.__mro__)
