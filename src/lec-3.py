@@ -1,4 +1,19 @@
 
+# Python Coding Practice 
+
+"""
+
+lecture 3
+18 FEB 2024
+
+"""
+
+
+# def information(**kwargs):
+#     print(type(kwargs))
+#     print(kwargs["age"])
+
+
 # json_d = {
 #     "school":"ABC", 
 #     "name":"xyz", 
@@ -15,7 +30,7 @@
 #     print(args)
 #     print(kwargs)
 
-# both_add_and_info(1,2,3,4, name="ABC", age="3")
+# both_add_and_info(1, 2, name="ABC", age="3")
 
 
 # nested functions
@@ -28,9 +43,11 @@
 
 #         print("Hi I am inside")
 
-    # inside()
+#     return inside
     
-# outside()
+# value = outside()
+
+# value()
 
 
 
@@ -43,9 +60,26 @@
 
 # def func_return():
 #     x  = 10
-#     return x
+#     y = 20
+#     z = 30
+#     return x, y, z
 
 
+# value_x, value_y, _  = func_return()
+
+# print(value_x)
+# print(value_y)
+# print(_)
+
+
+# def func_return():
+#     x  = 10
+
+#     return
+
+# value = func_return()
+
+# print(value)
 
 # ------------------------------------------------------
 
@@ -53,24 +87,23 @@
 
 # Decorators 
 
-# def make_pretty(func):
+# def make_pretty(_):
 
 #     print("I am before Inner")
 #     def inner():
 #         print("I got decorated")
 
-#     func()    
-
-
-#     return inner
+#     # func()    
+#     inner()
+#     return _
 
 # @make_pretty
 # def ordinary():
 #     print("I am ordinary")
 
-# ordinary()    
+# value = ordinary()    
 
-
+# value()
 
 # parameterized decorators
 
@@ -100,7 +133,7 @@
 
 #     print("I am first decorator")
 #     func()
-
+#     return func
 
 # def sec_dec(func2):
 
@@ -113,6 +146,9 @@
 # @sec_dec
 # def our_method():
 #     print("I am our method")
+
+
+# our_method()
 
 
 

@@ -2,8 +2,8 @@
 
 """
 
-lecture 2
-4 FEB 2024
+lecture 4
+19 FEB 2024
 
 python -i filename
 
@@ -137,6 +137,48 @@ python -i filename
 # print(Test().get_name_i_a()) 
 # print(t_obj.get_name_i_a())
 
+# ========================================================================
+
+
+# class DemoTest:
+
+#     name_c_a = "I am Class Attribute"
+
+#     def __init__(self):
+
+#         self.name_i_a = "I am Instance Attribute"
+
+#     @classmethod
+#     def i_am_class_method(cls):
+
+#         print(f"I am class Method {cls.name_c_a}")
+
+#     def i_am_instance_method(self):
+
+#         print(f"I am Instance Method {self.name_c_a}")
+
+
+# By class Name
+        
+# print(DemoTest.name_c_a)
+# print(DemoTest.name_i_a) # ERROR
+
+# DemoTest.i_am_class_method()
+# DemoTest.i_am_instance_method(DemoTest())
+
+
+# By Instance/object
+        
+# dt = DemoTest()
+
+# print(dt.name_c_a)
+# print(dt.name_i_a) 
+
+# dt.i_am_class_method()
+# dt.i_am_instance_method()
+
+
+# ==========================================================================
 
 
 # Public and Private
@@ -144,17 +186,18 @@ python -i filename
 
 # class Student:
 
-#     __private_password = "ABCDEFG"
-#     public_name = "ABC"
+#     __private_password = "PASSWORD-ABCDEFG"
+#     public_name = "class_ABC"
+
 #     def __init__(self):
-#         pass
+#         self.public_instance_method = "instance_ABC"
 
 #     def __private_password_method(self):
 #         print("I am private Password Method", self.__private_password)
 
 
 #     def public_name_method(self):
-#         print(f"I am public name method {self.public_name}")
+#         print(f"I am public name method {self.__private_password}")
 
 
     
@@ -162,15 +205,23 @@ python -i filename
 # s = Student()
 
 # print(s.public_name)
+# print(s.public_instance_method)
 # s.public_name_method()
 
-# print(s.__private_password)
-# s.__private_password_method()
+# print(Student.__private_password) # ERROR
+# print(s.__private_password) # ERROR
+# s.__private_password_method() # ERROR
+
+# s.public_name_method()
+
+
+
 
 # still we can access private members
 
 # print(s._Student__private_password)
-# (s._Student__private_password_method)()
+
+# s._Student__private_password_method()
 
 
 # Before Protected we will learn inheritance
@@ -254,7 +305,7 @@ python -i filename
 
 
 
-# Multipath
+# Multipath / Diamond
 
 
 # class A:
@@ -273,12 +324,17 @@ python -i filename
 #     pass
 
 
+# print(D.__mro__)
+
+
 
 
 # Protected and Override method
 # class Parent:
 
 #     _name = "I am parent"
+
+#     __cycle = "CYCLE"
 
 #     def __init__(self):
 #         pass
@@ -294,13 +350,16 @@ python -i filename
 #     _name = "I am child"
 
 #     def __init__(self):
-#         pass
+#         super()
 
 #     def address(self):
 #         return "my address is NEW ADDRESS"
     
 #     def parent_name(self):
-#         return "my parent name is " + super()._name
+#         return "my parent name is " + Parent._name
+    
+    # def _car(self):
+    #     return "I have BMW"
 
 
 # c = Child()
@@ -308,10 +367,21 @@ python -i filename
 # print(c.address())
 # print(c._name)
 # print(c._car())
-
-# # Method Overriding
-
 # print(c.parent_name())
+
+# print(dir(c))
+
+
+# class GrandChild(Child):
+
+#     def get_grandfather_name(self):
+
+#         print(Parent._name)
+
+
+# gc = GrandChild()
+
+# gc.get_grandfather_name()
 
 
 
@@ -325,22 +395,22 @@ class Test:
     __new__ dunder method introductions
     """
 
-    # name = "ABC"
+    name = "ABC"
     
-    # def __new__(cls):
-    #     """
-    #     This method is used to create new instance of a class
-    #     This method is unique and it's called before __init__()
-    #     It returns new instance of class
-    #     Used in immutable types and used in metaprogramming
-    #     """
+    def __new__(cls):
+        """
+        This method is used to create new instance of a class
+        This method is unique and it's called before __init__()
+        It returns new instance of class
+        Used in immutable types and used in metaprogramming
+        """
 
-    #     print(f"{cls.name} saying Hi from __new__")
+        print(f"{cls.name} saying Hi from __new__")
 
-    #     # creating parent class's instance
-    #     # print(super(Test, cls))
+        # creating parent class's instance
+        # print(super(Test, cls))
 
-    #     # return super(Test, cls)
+        # return super(Test, cls)
 
     def __init__(self):
         """
@@ -352,41 +422,41 @@ class Test:
         print("saying HI from __init__")
 
 
-# t_new = Test()
-# print(t_new)
-# print(dir(t_new))
-# print(t_new.name)
+# # t_new = Test()
+# # print(t_new)
+# # print(dir(t_new))
+# # print(t_new.name)
 
 
-class Test:
-    """
-    Aithmatic and Bitwise Magic Methods
-    __eq__ __ne__, 
-    __lt__, __le__, __gt__, __ge__
+# class Test:
+#     """
+#     Aithmatic and Bitwise Magic Methods
+#     __eq__ __ne__, 
+#     __lt__, __le__, __gt__, __ge__
     
-    __add__, __sub__, __mul__, __truediv__[/], __floordiv__[//], 
-    __mod__, __pow__, __and__[bitwise_and], __invert__[bitwise inversion],
-    __or__, __xor__
-    """
-    def __init__(self, name, age):
-        """
-        """
-        self.name = name
-        self.age = age
+#     __add__, __sub__, __mul__, __truediv__[/], __floordiv__[//], 
+#     __mod__, __pow__, __and__[bitwise_and], __invert__[bitwise inversion],
+#     __or__, __xor__
+#     """
+#     def __init__(self, name, age):
+#         """
+#         """
+#         self.name = name
+#         self.age = age
 
 
-    def __eq__(self, another_instance):
-        """
-        asserts attributs and it's values
-        """
-        return self.name == another_instance.name and self.age == another_instance.age
+#     def __eq__(self, another_instance):
+#         """
+#         asserts attributs and it's values
+#         """
+#         return self.name == another_instance.name and self.age == another_instance.age
 
 
-    def __ne__(self, another_instance):
-        """
-        asserts attributs and it's values
-        """
-        return self.name != another_instance.name and self.age != another_instance.age
+#     def __ne__(self, another_instance):
+#         """
+#         asserts attributs and it's values
+#         """
+#         return self.name != another_instance.name and self.age != another_instance.age
 
 
 
@@ -403,26 +473,26 @@ class Test:
 # print(t.__ne__(t2))
 
 
-class Test:
-    """
-    Numeric Conversion Magic method
+# class Test:
+#     """
+#     Numeric Conversion Magic method
     
-    __int__, __float__, __complex__, __str__
-    """
+#     __int__, __float__, __complex__, __str__
+#     """
 
-    def __init__(self, number, name):
-        """
-        """
+#     def __init__(self, number, name):
+#         """
+#         """
 
-        self.number = number
-        self.name = name
+#         self.number = number
+#         self.name = name
         
 
 
-    def __int__(self):
-        """
-        """
-        self.number = int(self.number)
+#     def __int__(self):
+#         """
+#         """
+#         self.number = int(self.number)
 
     
 # t = Test(10.3, "float number")
@@ -434,18 +504,18 @@ class Test:
 # print(t.number)
 
 
-class Test():
+# class Test():
     
-    """
-    Attribute Access and Descriptor
-    __getattribute__, __setattr__, __delattr__, __dict__
-    """
+#     """
+#     Attribute Access and Descriptor
+#     __getattribute__, __setattr__, __delattr__, __dict__
+#     """
 
-    def __init__(self, number, name):
-        """
-        """
-        self.number = number
-        self.name = name
+#     def __init__(self, number, name):
+#         """
+#         """
+#         self.number = number
+#         self.name = name
 
 
 # t = Test(10, "ABC")
@@ -495,84 +565,84 @@ class Test():
 
 
 # =============================== Callable Objects
-class Test:
+# class Test:
     
-    """
-    callable objects
-    __call__ : allow an instance to be called as a method
-    """
+#     """
+#     callable objects
+#     __call__ : allow an instance to be called as a method
+#     """
 
-    def __init__(self, number, name):
-        """
-        """
-        self.number = number
-        self.name = name
+#     def __init__(self, number, name):
+#         """
+#         """
+#         self.number = number
+#         self.name = name
 
-    def __call__(self, age):
-        self.number += age
+#     def __call__(self, age):
+#         self.number += age
 
-# t = Test(20, "ABC")
+# # t = Test(20, "ABC")
 
-# print(t.number)
+# # print(t.number)
 
-# t(10)
+# # t(10)
 
-# print(t.number)
+# # print(t.number)
         
 
-# -================================ Slots
+# # -================================ Slots
         
-class Test:
-    """
-    __slots__ : to keep fixed set of attributes
-    """
+# class Test:
+#     """
+#     __slots__ : to keep fixed set of attributes
+#     """
 
-    # __slots__ = ['name', 'age']
+#     # __slots__ = ['name', 'age']
 
-    def __init__(self, name, age):
+#     def __init__(self, name, age):
         
-        self.name = name
-        self.age = age
+#         self.name = name
+#         self.age = age
         
 
-    def add_new_attribute(self):
+#     def add_new_attribute(self):
 
-        self.new_att = "I am new"
+#         self.new_att = "I am new"
 
-# t = Test("ABC", 20)
+# # t = Test("ABC", 20)
 
-# print(t.name)
-# print(t.age)
+# # print(t.name)
+# # print(t.age)
 
-# # t.add_new_attribute()
+# # # t.add_new_attribute()
 
-# print(dir(t))
-# print(t.__dict__)
+# # print(dir(t))
+# # print(t.__dict__)
 
 
-# ========================================== Class method and Static Method
+# # ========================================== Class method and Static Method
 
-class Test:
-    """
-    class method
-    """
+# class Test:
+#     """
+#     class method
+#     """
 
-    number = 50
+#     number = 50
 
-    def __init__(self, name, age):
+#     def __init__(self, name, age):
 
-        self.name = name
-        self.age = age
+#         self.name = name
+#         self.age = age
         
-    @classmethod
-    def i_am_class_method(cls):
-        # return f"{cls.name} {cls.age}"
-        return cls.number
+#     @classmethod
+#     def i_am_class_method(cls):
+#         # return f"{cls.name} {cls.age}"
+#         return cls.number
     
-    @classmethod
-    def object_less_class_method(cls):
+#     @classmethod
+#     def object_less_class_method(cls):
 
-        return "I am Object less class method"
+#         return "I am Object less class method"
 
 
 # t = Test("ABC", 30)
@@ -588,22 +658,22 @@ class Test:
     
 
 
-class Test:
-    """
-    static method
-    """
+# class Test:
+#     """
+#     static method
+#     """
 
-    number = 50
+#     number = 50
 
-    def __init__(self, name, age):
+#     def __init__(self, name, age):
 
-        self.name = name
-        self.age = age
+#         self.name = name
+#         self.age = age
 
-    @staticmethod
-    def i_am_static():
+#     @staticmethod
+#     def i_am_static():
 
-        return f"I am static method"
+#         return f"I am static method"
     
 
 # t = Test("ABC", 20)
@@ -615,39 +685,39 @@ class Test:
 
 # ================================================== property, getter, setter, deleter
     
-class Test:
-    """
-    property 
-    getter
-    setter
-    deleter
-    """
+# class Test:
+#     """
+#     property 
+#     getter
+#     setter
+#     deleter
+#     """
 
-    number = 50
+#     number = 50
 
-    def __init__(self, name, age):
+#     def __init__(self, name, age):
 
-        self.name = name
-        self.age = age
-        self._address = None
+#         self.name = name
+#         self.age = age
+#         self._address = None
 
-    @property
-    def address(self):
-        return self._address
+#     @property
+#     def address(self):
+#         return self._address
 
-    @address.setter
-    def address(self, address):
+#     @address.setter
+#     def address(self, address):
 
-        self._address = f"{self.name} --- {address}"    
+#         self._address = f"{self.name} --- {address}"    
     
-    @address.deleter
-    def address(self):
-        self.__delattr__("_address")
-        print("address deleted")
+#     @address.deleter
+#     def address(self):
+#         self.__delattr__("_address")
+#         print("address deleted")
 
 
 
-t = Test("ABC", 3)
+# t = Test("ABC", 3)
 
 # print(Test.number)
 # print(t.name)
@@ -673,53 +743,53 @@ t = Test("ABC", 3)
 # ==================================== Abstract Classes
 
 
-from abc import ABC, abstractmethod
+# from abc import ABC, abstractmethod
 
-class Person(ABC):
+# class Person(ABC):
 
-    @abstractmethod
-    def name(self):
-        pass
+#     @abstractmethod
+#     def name(self):
+#         pass
 
-    @abstractmethod
-    def age(self):
-        pass
+#     @abstractmethod
+#     def age(self):
+#         pass
 
-    @abstractmethod
-    def gender(self):
-        pass
+#     @abstractmethod
+#     def gender(self):
+#         pass
 
-    @property
-    @abstractmethod
-    def roll_no(self):
-        pass
+#     @property
+#     @abstractmethod
+#     def roll_no(self):
+#         pass
 
-    @roll_no.setter
-    @abstractmethod
-    def roll_no(self):
-        pass
+#     @roll_no.setter
+#     @abstractmethod
+#     def roll_no(self):
+#         pass
 
 
-class Student(Person):
+# class Student(Person):
 
-    _roll_no = 0
+#     _roll_no = 0
 
-    def __init__(self):
+#     def __init__(self):
 
-        pass
+#         pass
 
-    def age(self):
-        return 20
+#     def age(self):
+#         return 20
     
-    def gender(self):
-        return "male"
+#     def gender(self):
+#         return "male"
 
-    def name(self):
-        return "ABC"
+#     def name(self):
+#         return "ABC"
 
-    @property
-    def roll_no(self):
-        return self._roll_no
+#     @property
+#     def roll_no(self):
+#         return self._roll_no
 
 # p = Person()
 
@@ -732,38 +802,38 @@ class Student(Person):
 # Mixins classes
     
 
-class WalkMixin:
+# class WalkMixin:
 
-    def move(self):
-        print("Walking......")
+#     def move(self):
+#         print("Walking......")
 
-class FlyMixin:
+# class FlyMixin:
 
-    def move(self):
-        print("Flying......")
-
-
-class Animal:
-
-    pass
+#     def move(self):
+#         print("Flying......")
 
 
-class Horse(Animal, WalkMixin):
+# class Animal:
 
-    def __init__(self):
-
-        self.move()
-
-class Eagle(Animal, FlyMixin):
-
-    def __init__(self):
-        self.move()
+#     pass
 
 
-h = Horse()
+# class Horse(Animal, WalkMixin):
 
-print(Horse.__mro__)
+#     def __init__(self):
 
-e = Eagle()
+#         self.move()
 
-print(Eagle.__mro__)
+# class Eagle(Animal, FlyMixin):
+
+#     def __init__(self):
+#         self.move()
+
+
+# h = Horse()
+
+# print(Horse.__mro__)
+
+# e = Eagle()
+
+# print(Eagle.__mro__)
