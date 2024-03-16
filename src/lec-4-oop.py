@@ -185,6 +185,9 @@ python -i filename
 
 
 # class Student:
+#     """
+#     private attribute can not be deleted
+#     """
 
 #     __private_password = "PASSWORD-ABCDEFG"
 #     public_name = "class_ABC"
@@ -390,42 +393,44 @@ python -i filename
 # magic_methods, dunder_methods
 
 
-class Test:
-    """
-    __new__ dunder method introductions
-    """
+# class Test:
+#     """
+#     __new__ dunder method introductions
+#     """
 
-    name = "ABC"
+#     name = "ABC"
     
-    def __new__(cls):
-        """
-        This method is used to create new instance of a class
-        This method is unique and it's called before __init__()
-        It returns new instance of class
-        Used in immutable types and used in metaprogramming
-        """
+    # def __new__(cls):
+    #     """
+    #     This method is used to create new instance of a class
+    #     This method is unique and it's called before __init__()
+    #     It returns new instance of class
+    #     Used in immutable types and used in metaprogramming
+    #     """
 
-        print(f"{cls.name} saying Hi from __new__")
+    #     print(f"{cls.name} saying Hi from __new__")
 
-        # creating parent class's instance
-        # print(super(Test, cls))
+    #     # creating parent class's instance
+    #     obj = super(Test, cls)
 
-        # return super(Test, cls)
+    #     return obj
 
-    def __init__(self):
-        """
-        Constructor 
-        """
+#     def __init__(self):
+#         """
+#         Constructor 
+#         """
 
-        self.name = "ABC"
+#         self.name = "XYZ"
 
-        print("saying HI from __init__")
+#         print(f"{self.name} saying HI from __init__")
 
+#     def name(self):
+#         pass
 
-# # t_new = Test()
-# # print(t_new)
-# # print(dir(t_new))
-# # print(t_new.name)
+# t_new = Test()
+# print(t_new)
+# print(dir(t_new))
+# print(t_new.name) # careful
 
 
 # class Test:
@@ -523,10 +528,14 @@ class Test:
 # print(t.name)
 # print(t.number)
 
-# print(t.__getattribute__("number"))
 # print(t.__getattribute__("name"))
+# print(t.__getattribute__("number"))
 
-# __getattr__ vs __getattribute__
+
+# print(dir(t))
+
+
+# __getattr__ vs __getattribute__ ?
 
 
 # t.name = "XYZ"
@@ -559,7 +568,10 @@ class Test:
 # print(dir(t1))
 # print(t1.number)
 
+# print(type(t))
 
+# print(hasattr(t, "age"))
+# print(isinstance(t, Test))
 
 # print(t.__dict__)
 
@@ -581,13 +593,13 @@ class Test:
 #     def __call__(self, age):
 #         self.number += age
 
-# # t = Test(20, "ABC")
+# t = Test(20, "ABC")
 
-# # print(t.number)
+# print(t.number)
 
-# # t(10)
+# t(10)
 
-# # print(t.number)
+# print(t.number)
         
 
 # # -================================ Slots
@@ -595,28 +607,49 @@ class Test:
 # class Test:
 #     """
 #     __slots__ : to keep fixed set of attributes
+#     NOTE: If __slots__ is enabled then __dict__ can't be used
 #     """
 
-#     # __slots__ = ['name', 'age']
+#     # __slots__ = ['name', 'age', "new_att"]
 
 #     def __init__(self, name, age):
         
 #         self.name = name
 #         self.age = age
         
+        # return self
 
-#     def add_new_attribute(self):
+    # def add_new_attribute(self):
 
-#         self.new_att = "I am new"
+    #     self.new_att = "I am new"
 
-# # t = Test("ABC", 20)
+# t = Test("A", 123)
+# print(t.__dict__)
 
-# # print(t.name)
-# # print(t.age)
+# class ChildTest(Test):
 
-# # # t.add_new_attribute()
+#     child_att = True
 
-# # print(dir(t))
+#     def __init__(self, name, age):
+#         super().__init__(name, age)
+
+# ct = ChildTest("XYZ", 100)
+
+
+# print("Child")
+# print(dir(ct))
+# print(ct.__dict__)
+
+# t = Test("ABC", 20)
+
+# print(t.name)
+# print(t.age)
+
+# print(dir(t))
+
+# t.add_new_attribute()
+
+# print(dir(t))
 # # print(t.__dict__)
 
 
@@ -635,6 +668,19 @@ class Test:
 #         self.age = age
         
 #     @classmethod
+#     def name_method(cls):
+#         print("Name Method is CAlled")
+#         pass
+
+#     # Instance MEthod
+#     def name_inst_method(self):
+#         print("Name Instance Method is CAlled")
+#         pass
+
+
+    
+
+#     @classmethod
 #     def i_am_class_method(cls):
 #         # return f"{cls.name} {cls.age}"
 #         return cls.number
@@ -647,6 +693,16 @@ class Test:
 
 # t = Test("ABC", 30)
 
+
+
+# t = Test("ABC", 300)
+
+# Test.name_method()
+# t.name_inst_method()
+
+# print(dir(Test))
+
+# print(dir(t))
 
 
 # print(Test.i_am_class_method()) # careful
@@ -681,9 +737,10 @@ class Test:
 # print(Test.i_am_static())
 
 # print(dir(t))
+# print(dir(Test))
     
 
-# ================================================== property, getter, setter, deleter
+# ================ property, getter, setter, deleter
     
 # class Test:
 #     """
@@ -699,20 +756,20 @@ class Test:
 
 #         self.name = name
 #         self.age = age
-#         self._address = None
+#         self.__address = None
 
 #     @property
 #     def address(self):
-#         return self._address
+#         return self.__address
 
 #     @address.setter
 #     def address(self, address):
 
-#         self._address = f"{self.name} --- {address}"    
+#         self.__address = f"{self.name} --- {address}"    
     
 #     @address.deleter
 #     def address(self):
-#         self.__delattr__("_address")
+#         self.__delattr__("_Test__address")
 #         print("address deleted")
 
 
@@ -743,31 +800,31 @@ class Test:
 # ==================================== Abstract Classes
 
 
-# from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod
 
-# class Person(ABC):
+class Person(ABC):
 
-#     @abstractmethod
-#     def name(self):
-#         pass
+    @abstractmethod
+    def name(self):
+        pass
 
-#     @abstractmethod
-#     def age(self):
-#         pass
+    @abstractmethod
+    def age(self):
+        pass
 
-#     @abstractmethod
-#     def gender(self):
-#         pass
+    @abstractmethod
+    def gender(self):
+        pass
 
-#     @property
-#     @abstractmethod
-#     def roll_no(self):
-#         pass
+    @property
+    @abstractmethod
+    def roll_no(self):
+        pass
 
-#     @roll_no.setter
-#     @abstractmethod
-#     def roll_no(self):
-#         pass
+    @roll_no.setter
+    @abstractmethod
+    def roll_no(self):
+        pass
 
 
 # class Student(Person):

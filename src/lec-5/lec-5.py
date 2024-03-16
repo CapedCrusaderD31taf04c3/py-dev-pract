@@ -6,6 +6,7 @@ import module
 from module import i_am_method, Module
 
 
+
 print(module.i_am_method())
 
 print(i_am_method())
