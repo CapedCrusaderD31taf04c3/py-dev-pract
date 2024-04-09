@@ -800,31 +800,33 @@ python -i filename
 # ==================================== Abstract Classes
 
 
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 
-class Person(ABC):
 
-    @abstractmethod
-    def name(self):
-        pass
 
-    @abstractmethod
-    def age(self):
-        pass
+# class Person(ABC):
 
-    @abstractmethod
-    def gender(self):
-        pass
+#     @abstractmethod
+#     def name(self):
+#         pass
 
-    @property
-    @abstractmethod
-    def roll_no(self):
-        pass
+#     @abstractmethod
+#     def age(self):
+#         pass
 
-    @roll_no.setter
-    @abstractmethod
-    def roll_no(self):
-        pass
+#     @abstractmethod
+#     def gender(self):
+#         pass
+
+#     @property
+#     @abstractmethod
+#     def roll_no(self):
+#         pass
+
+#     @roll_no.setter
+#     @abstractmethod
+#     def roll_no(self):
+#         pass
 
 
 # class Student(Person):
@@ -832,7 +834,6 @@ class Person(ABC):
 #     _roll_no = 0
 
 #     def __init__(self):
-
 #         pass
 
 #     def age(self):
@@ -848,12 +849,60 @@ class Person(ABC):
 #     def roll_no(self):
 #         return self._roll_no
 
-# p = Person()
+
+# p = Person() # careful 
 
 # stu = Student()
 
+# print(dir(stu))
 # print(stu)
 
+
+
+# from abc import ABCMeta, abstractmethod
+
+
+# class Calculation(metaclass=ABCMeta):
+
+#     @abstractmethod
+#     def add(self):
+#         pass
+
+#     @abstractmethod
+#     def subtract(self):
+#         pass
+
+#     def multiply(self):
+#         pass
+
+#     def division(self):
+#         pass
+
+
+# class Math(Calculation):
+
+#     def add(self):
+#         """
+#         """
+#         pass
+
+#     def subtract(self):
+#         pass
+
+
+# class CCC(Math):
+
+#     pass
+
+# m = Math()
+
+# print(m)
+# print(dir(m))
+
+# c = CCC()
+
+# print(c)
+# print(dir(c))
 
 # ================================================ Mixins
 # Mixins classes
@@ -881,13 +930,14 @@ class Person(ABC):
 
 #         self.move()
 
-# class Eagle(Animal, FlyMixin):
+# class Eagle( FlyMixin):
 
 #     def __init__(self):
 #         self.move()
 
 
 # h = Horse()
+
 
 # print(Horse.__mro__)
 
